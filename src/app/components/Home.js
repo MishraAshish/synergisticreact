@@ -1,6 +1,8 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import {setAge, setName} from "../actions/userAction";
 
-export default class Home extends Component{
+class Home extends Component{
     constructor(props){
         super();
         this.state = {
@@ -85,8 +87,36 @@ export default class Home extends Component{
                     <button className="btn btn-primary" onClick={this.increasemyage(5)}>Make Me Older</button>
 
                     <hr/>
-                    <input type="text" value={this.state.initialCount} onChange={this.onHandleChange}/>                    
+                    <input type="text" value={this.state.initialCount} onChange={this.onHandleChange}/>    
+
+                    <hr/>
+                    <p>This is Your Changed Age : {this.props.user.age} </p>  
+
+                    <button className="btn btn-primary" onClick={() => this.props.setAge(25)}>ChangeUserAge</button> 
+
+                    <hr/>
+                    <p>This is Your Changed Age : {this.props.user.name} </p>  
+
+                    <button className="btn btn-primary" onClick={() => this.props.setName("Test")}>ChangeUserName</button>               
             </div>
         );
     }
 }
+const mapStateToProps = (state)=>{
+    return {
+        user: state.user       
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setName : (name) =>{
+            dispatch(setName(name))
+        },
+        setAge : (age) =>{
+            dispatch(setAge(age))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

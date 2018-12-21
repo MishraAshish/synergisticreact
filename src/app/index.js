@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {render} from "react-dom";
 import {Header, Footer} from "./components/Header";
 import Home from "./components/Home";
-
+import {Provider} from "react-redux";
+import store from "./store";
 
 class App extends Component{
     
@@ -72,4 +73,7 @@ class App extends Component{
     }
 }
 
-render(<App/>, document.getElementById("app"));
+render(<Provider store={store}>
+    <App />
+</Provider>, 
+document.getElementById("app"));
