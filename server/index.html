@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+        
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ashish - Node API's</title>     
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+    
+</head>
+<body>
+    <h4>
+        Please Type Name and Password
+    </h4>    
+    <div>
+        <div>
+            <input type="text" value="User Name" id="user"/>
+        </div>
+        <div>
+            <input type="text" value="Password" id="password"/>
+        </div>
+        <div>
+            <input type="button" id="submit" value="Submit">
+        </div>    
+    </div>
+
+    <div>
+        <div>
+            <input type="text" value="User Name" id="userupdate"/>
+        </div>
+        <div>
+            <input type="text" value="Password" id="passwordupdate"/>
+        </div>
+        <div>
+            <input type="button" id="update" value="Update">
+        </div>    
+    </div>
+
+    <div>
+        <div>
+            <input type="button" id="delete" value="Delete">
+        </div>    
+    </div>
+</body>
+<script>
+        $(document).ready(function(){
+          var user,pass;
+          $("#submit").click(function(){
+
+            user=$("#user").val();
+            pass=$("#password").val();
+            
+            $.post("http://localhost:9000/api/createuser",
+            {   user: user,
+                password: pass
+            },         
+            function(data){
+              if(data==='done')
+                {
+                  alert("login success");
+                }
+            });
+          });
+          
+          $("#update").click(function(){    
+                $.post("http://localhost:9000/api/edituser",
+                {
+                    _id: idtoUpdate, 
+                    Name: $("#userupdate").val(), 
+                    Password: $("#passwordupdate").val()
+                },         
+                    function(data){                        
+                        if(data==='done')
+                            {
+                    alert("delete success");
+                    }
+                });
+            });
+            
+            ////////
+            $("#delete").click(function(){    
+                $.post("http://localhost:9000/api/deluser",
+                {_id: idtoUpdate},         
+                function(data){
+                    if(data==='done')
+                    {
+                        alert("delete success");
+                    }
+                });
+            });
+
+            var idtoUpdate = "";
+            (function bindData() {
+                $.get("http://localhost:9000/api/getuser",                        
+                function(data){                     
+                    idtoUpdate = data[data.length-1]._id; 
+                    $("#userupdate").val(data[data.length-1].Name);
+                    $("#passwordupdate").val(data[data.length-1].Password);              
+                    if(data==='done')
+                    {
+                        alert("delete success");
+                    }
+                });
+            })();//IIFE
+        });
+</script>
+</html>

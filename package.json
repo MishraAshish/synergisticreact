@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nothing for now",
     "start": "npm run build",
-    "build": "webpack -d && copy src\\index.html dist\\index.html && webpack-dev-server --port 9000 --content-base src/ --inline --hot",
+    "build": "webpack -d && copy src\\index.html dist\\index.html && webpack-dev-server --port 9090 --content-base src/ --inline --hot",
     "build:prod": "webpack -p && cp src/index.html dist/index.html"
   },
   "author": "",
